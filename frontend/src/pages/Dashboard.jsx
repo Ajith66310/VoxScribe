@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Premium Icon Set
-import { 
-  Mic, 
-  Settings2, 
-  LogOut, 
-  ClipboardList, 
-  Copy, 
-  Trash2, 
-  FileText, 
-  History, 
-  Sparkles,
-  ArrowRight
+import { toast } from "sonner";
+import {
+  Mic, Settings2, LogOut, ClipboardList, Copy, Trash2,
+  FileText, History, Sparkles, ArrowRight
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -30,19 +22,21 @@ export default function Dashboard() {
     const updated = transcripts.filter((_, index) => index !== indexToDelete);
     setTranscripts(updated);
     localStorage.setItem("transcripts", JSON.stringify(updated));
+    toast.success("Transcript deleted");
   };
 
   const clearAllHistory = () => {
     if (window.confirm("Are you sure you want to delete ALL transcripts?")) {
       setTranscripts([]);
       localStorage.setItem("transcripts", "[]");
+      toast.success("All transcripts cleared");
     }
   };
 
   const copyAllToClipboard = () => {
     const allText = transcripts.join("\n\n");
     navigator.clipboard.writeText(allText);
-    alert("Full history copied!");
+    toast.success("Full history copied");
   };
 
   return (
@@ -56,7 +50,7 @@ export default function Dashboard() {
             </div>
             <span className="tracking-tight text-lg">VoxScribe</span>
           </div>
-          <button 
+          <button
             onClick={logout}
             className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
           >
@@ -67,7 +61,7 @@ export default function Dashboard() {
       </nav>
 
       <main className="max-w-5xl mx-auto px-6 py-10">
-        
+
         {/* Welcome Header */}
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-2">
@@ -82,7 +76,7 @@ export default function Dashboard() {
         {/* Quick Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {/* Main Record Card */}
-          <button 
+          <button
             onClick={() => navigate("/recorder")}
             className="md:col-span-2 group relative overflow-hidden flex items-center p-8 bg-slate-900 rounded-4xl transition-all hover:-translate-y-1 active:scale-[0.98] shadow-2xl shadow-slate-200 text-left"
           >
@@ -97,7 +91,7 @@ export default function Dashboard() {
           </button>
 
           {/* Settings/Mic Card */}
-          <button 
+          <button
             onClick={() => navigate("/mic-check")}
             className="group flex flex-col justify-between p-8 bg-white border border-slate-200 rounded-4xl hover:border-indigo-200 transition-all hover:-translate-y-1 shadow-sm active:scale-[0.98] text-left"
           >
@@ -123,7 +117,7 @@ export default function Dashboard() {
                 <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{transcripts.length} Saved Items</p>
               </div>
             </div>
-            
+
             {transcripts.length > 0 && (
               <div className="flex gap-2">
                 <button onClick={copyAllToClipboard} className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-all">
@@ -149,14 +143,14 @@ export default function Dashboard() {
               [...transcripts].reverse().map((text, revIdx) => {
                 const originalIdx = transcripts.length - 1 - revIdx;
                 return (
-                  <div 
-                    key={originalIdx} 
+                  <div
+                    key={originalIdx}
                     className="flex items-center gap-6 p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group"
                   >
                     <div className="shrink-0 w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-50 transition-colors">
                       <FileText size={20} />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <p className="text-slate-700 font-semibold truncate group-hover:text-indigo-600 transition-colors">
                         {text}
@@ -173,17 +167,18 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button 
+                      <button
                         onClick={() => {
                           navigator.clipboard.writeText(text);
-                          alert("Copied!");
+                          toast.success("Copied to clipboard");
                         }}
+
                         className="p-3 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
                         title="Copy"
                       >
                         <Copy size={18} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => deleteSingle(originalIdx)}
                         className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
                         title="Delete"

@@ -1,32 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import { useMicrophone } from "../hooks/useMicrophone";
-// Standard Lucide icons
+import { toast } from "sonner";
 import { 
-  Mic, 
-  Square, 
-  ChevronLeft, 
-  Save, 
-  Trash2, 
-  Sparkles 
+  Mic, Square, ChevronLeft, Save, Trash2, Sparkles 
 } from "lucide-react";
 
 export default function Recorder() {
   const navigate = useNavigate();
   const { 
-    startRecording, stopRecording, isRecording, 
+    startRecording, stopRecording, isRecording,
     finalTranscript, interimTranscript, clearTranscript 
   } = useMicrophone();
 
   const handleManualSave = () => {
-    if (!finalTranscript || finalTranscript.trim().length === 0) {
-      alert("No transcript to save!");
+    if (!finalTranscript || !finalTranscript.trim()) {
+      toast.error("No transcript to save");
       return;
     }
 
     const existing = JSON.parse(localStorage.getItem("transcripts") || "[]");
-    localStorage.setItem("transcripts", JSON.stringify([...existing, finalTranscript]));
-    
-    alert("Transcript saved successfully!");
+    localStorage.setItem(
+      "transcripts",
+      JSON.stringify([...existing, finalTranscript])
+    );
+
+    toast.success("Transcript saved successfully");
     clearTranscript();
     navigate("/dashboard");
   };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// Premium Icons
+import { toast } from "sonner";
 import { Mic, Mail, Lock, ArrowRight, Sparkles } from "lucide-react";
 
 export default function Login() {
@@ -8,10 +8,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // Check if already signed in
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
+    if (localStorage.getItem("user")) {
       navigate("/home");
     }
   }, [navigate]);
@@ -19,21 +17,15 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Basic Validation
     if (email && password.length >= 6) {
-      const userInfo = {
-        email: email,
-        loginTime: new Date().toISOString(),
-        isAuthenticated: true
-      };
-
-      // Store in localStorage
-      localStorage.setItem("user", JSON.stringify(userInfo));
-      
-      // Redirect directly to Home
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email, loginTime: new Date().toISOString() })
+      );
+      toast.success("Welcome back!");
       navigate("/dashboard");
     } else {
-      alert("Please enter a valid email and password (min 6 chars)");
+      toast.error("Invalid email or password (min 6 chars)");
     }
   };
 
