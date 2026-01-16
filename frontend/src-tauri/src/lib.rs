@@ -8,6 +8,17 @@ fn greet(name: &str) -> String {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_http::init())      // Added HTTP support
+        .plugin(tauri_plugin_deep_link::init()) // Added Deep Link support
+        .setup(|app| {
+            // This is critical for Windows to register the deep link scheme
+            #[cfg(all(desktop, target_os = "windows"))]
+            {
+                use tauri_plugin_deep_link::DeepLinkExt;
+                app.deep_link().register_all()?;
+            }
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

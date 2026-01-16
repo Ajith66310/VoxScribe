@@ -137,8 +137,6 @@ export default function Recorder() {
 
         <div className="mt-8 flex items-center justify-center gap-4 text-slate-400 text-xs">
           <span className="flex items-center gap-1"><Sparkles size={12} /> AI Enhanced</span>
-          <span className="w-1 h-1 bg-slate-300 rounded-full" />
-          <span>Local Storage Secure</span>
         </div>
       </div>
     </div>

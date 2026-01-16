@@ -1,32 +1,35 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "frontend",
+  "productName": "VoxScribe",
   "version": "0.1.0",
   "identifier": "com.ajith.wisprflow",
-
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
-
   "app": {
     "windows": [
       {
-        "title": "frontend",
-        "width": 800,
-        "height": 600
+        "title": "VoxScribe",
+        "width": 900,
+        "height": 700
       }
     ],
-
-"security": {
-  "capabilities": [
-    "default"
-  ]
-}
+    "security": {
+      "capabilities": ["default"],
+      "csp": "default-src 'self'; img-src 'self' https://www.svgrepo.com https://*.googleusercontent.com https://www.google.com data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co"
+    }
   },
-
+  "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": ["voxscribe"]
+      }
+    },
+    "opener": {}
+  },
   "bundle": {
     "active": true,
     "targets": "all",

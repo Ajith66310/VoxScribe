@@ -4,6 +4,12 @@
   "description": "Basic permissions for the app",
   "windows": ["main"],
   "permissions": [
-    "core:default"
+    "core:default",
+    "opener:default",
+    "deep-link:default",
+    "http:default"
+  ],
+  "remoteDomains": [
+    "tpxfwbmlnzimatwgjrca.supabase.co"
   ]
 }
