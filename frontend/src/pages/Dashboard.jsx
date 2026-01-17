@@ -116,9 +116,9 @@ export default function Dashboard() {
             className="md:col-span-2 group relative overflow-hidden flex items-center p-8 bg-slate-900 rounded-3xl transition-all hover:-translate-y-1 active:scale-[0.98] shadow-2xl shadow-slate-200 text-left"
           >
             <div className="relative z-10">
-              <h3 className="text-white font-bold text-xl mb-1">Start New Recording</h3>
+              <h3 className="text-white font-bold text-xl mb-1 ">Start New Recording</h3>
               <p className="text-slate-400 text-sm mb-4">High-fidelity live transcription</p>
-              <div className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold group-hover:bg-indigo-50 transition-colors">
+              <div className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold group-hover:bg-indigo-50 group-hover:text-black transition-colors">
                 Launch Recorder <ArrowRight size={16} />
               </div>
             </div>
